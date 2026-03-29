@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hazel & Co. — Brunch Café, Tauranga</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --warm-white: #FDFAF5;
+    --hazel: #8B6914;
+    --hazel-light: #C49A30;
+    --bark: #3D2B1F;
+    --bark-soft: #6B4E3D;
+    --sage: #7A8C6E;
+    --sage-light: #B5C4A8;
+    --blush: #E8C4A0;
+    --text: #2C1F14;
+    --text-soft: #7A6355;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 24px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background 0.4s, padding 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(253, 250, 245, 0.95);
+    backdrop-filter: blur(12px);
+    padding: 16px 48px;
+    border-bottom: 1px solid rgba(139, 105, 20, 0.12);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--bark);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--hazel); font-style: italic; }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-size: 0.82rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--hazel); }
+  .nav-reserve {
+    background: var(--bark);
+    color: var(--cream) !important;
+    padding: 10px 22px;
+    border-radius: 2px;
+    letter-spacing: 0.1em !important;
+    transition: background 0.2s !important;
+  }
+  .nav-reserve:hover { background: var(--hazel) !important; color: var(--cream) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left {
+    background: var(--cream);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 64px 80px 80px;
+    position: relative;
+  }
+  .hero-tag {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--hazel);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--hazel);
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 5.5vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    color: var(--bark);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--hazel);
+    font-weight: 300;
+  }
+  .hero-sub {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-soft);
+    max-width: 380px;
+    margin-bottom: 48px;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+  .btn-primary {
+    background: var(--bark);
+    color: var(--cream);
+    padding: 14px 32px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-primary:hover { background: var(--hazel); transform: translateY(-1px); }
+  .btn-ghost {
+    color: var(--bark);
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--hazel); }
+  .btn-ghost::after {
+    content: '→';
+    transition: transform 0.2s;
+  }
+  .btn-ghost:hover::after { transform: translateX(4px); }
+
+  .hero-hours {
+    position: absolute;
+    bottom: 48px;
+    left: 80px;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    opacity: 0;
+    animation: fadeUp 0.8s 1s forwards;
+  }
+  .hero-hours span { color: var(--hazel); margin-right: 6px; }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeIn 1.2s 0.3s forwards;
+  }
+  .hero-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 8s ease;
+  }
+  .hero-right:hover .hero-img { transform: scale(1.04); }
+  .hero-img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, rgba(245,240,232,0.3) 0%, transparent 40%);
+  }
+  .hero-badge {
+    position: absolute;
+    bottom: 48px;
+    left: -28px;
+    background: var(--hazel);
+    color: var(--cream);
+    padding: 24px 28px;
+    width: 160px;
+    text-align: center;
+  }
+  .hero-badge-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    font-weight: 300;
+    line-height: 1;
+    display: block;
+  }
+  .hero-badge-text {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-top: 4px;
+    display: block;
+    line-height: 1.4;
+  }
+
+  /* DIVIDER */
+  .divider-strip {
+    background: var(--bark);
+    padding: 18px 80px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow: hidden;
+  }
+  .divider-items {
+    display: flex;
+    gap: 0;
+    white-space: nowrap;
+    animation: marquee 20s linear infinite;
+  }
+  .divider-item {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blush);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .divider-dot {
+    width: 4px; height: 4px;
+    background: var(--hazel-light);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ABOUT */
+  .about {
+    padding: 120px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 80px;
+    align-items: center;
+    background: var(--warm-white);
+  }
+  .about-imgs {
+    position: relative;
+    height: 540px;
+  }
+  .about-img-main {
+    position: absolute;
+    top: 0; left: 0;
+    width: 72%;
+    height: 82%;
+    object-fit: cover;
+  }
+  .about-img-accent {
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 52%;
+    height: 52%;
+    object-fit: cover;
+    border: 6px solid var(--warm-white);
+  }
+  .about-tag {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .about-tag::before {
+    content: '';
+    width: 32px; height: 1px;
+    background: var(--sage);
+  }
+  .about-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 3.5vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--bark);
+    margin-bottom: 28px;
+  }
+  .about-title em { font-style: italic; color: var(--hazel); }
+  .about-text {
+    font-size: 0.95rem;
+    line-height: 1.85;
+    color: var(--text-soft);
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+  .about-values {
+    display: flex;
+    gap: 32px;
+    margin-top: 40px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(139,105,20,0.15);
+  }
+  .about-value-item { flex: 1; }
+  .about-value-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 300;
+    color: var(--hazel);
+    display: block;
+    line-height: 1;
+  }
+  .about-value-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-top: 6px;
+    display: block;
+  }
+
+  /* MENU */
+  .menu-section {
+    background: var(--cream);
+    padding: 120px 80px;
+  }
+  .section-header {
+    text-align: center;
+    margin-bottom: 72px;
+  }
+  .section-tag {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--hazel);
+    margin-bottom: 16px;
+    display: block;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 4vw, 3.5rem);
+    font-weight: 300;
+    color: var(--bark);
+    line-height: 1.1;
+  }
+  .section-title em { font-style: italic; color: var(--hazel); }
+
+  .menu-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 56px;
+    border-bottom: 1px solid rgba(139,105,20,0.2);
+  }
+  .menu-tab {
+    padding: 12px 32px;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: 'DM Sans', sans-serif;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .menu-tab.active { color: var(--hazel); border-bottom-color: var(--hazel); }
+  .menu-tab:hover { color: var(--bark); }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .menu-item {
+    background: var(--warm-white);
+    padding: 36px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+    cursor: default;
+  }
+  .menu-item::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--hazel);
+    transition: width 0.4s;
+  }
+  .menu-item:hover { background: #FAF6EE; }
+  .menu-item:hover::before { width: 100%; }
+  .menu-item-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 12px;
+  }
+  .menu-item-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--bark);
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+  .menu-item-desc {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: var(--text-soft);
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+  .menu-item-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--hazel);
+  }
+  .menu-item-badge {
+    position: absolute;
+    top: 20px; right: 20px;
+    background: var(--hazel);
+    color: var(--cream);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 2px;
+  }
+
+  /* GALLERY */
+  .gallery {
+    padding: 120px 80px;
+    background: var(--warm-white);
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    grid-template-rows: 280px 280px;
+    gap: 8px;
+    margin-top: 64px;
+  }
+  .gallery-item {
+    overflow: hidden;
+    position: relative;
+    background: var(--cream);
+  }
+  .gallery-item:first-child {
+    grid-row: 1 / 3;
+  }
+  .gallery-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+    display: block;
+  }
+  .gallery-item:hover img { transform: scale(1.06); }
+  .gallery-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 20px;
+    background: linear-gradient(to top, rgba(61,43,31,0.7) 0%, transparent 100%);
+    color: var(--cream);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .gallery-item:hover .gallery-caption { opacity: 1; }
+
+  /* TESTIMONIALS */
+  .testimonials {
+    background: var(--bark);
+    padding: 120px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .testimonials::before {
+    content: '"';
+    position: absolute;
+    top: -40px; left: 60px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28rem;
+    color: rgba(139,105,20,0.08);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .testimonials .section-title { color: var(--cream); }
+  .testimonials .section-tag { color: var(--hazel-light); }
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 64px;
+  }
+  .review-card {
+    border: 1px solid rgba(245,240,232,0.12);
+    padding: 40px 36px;
+    position: relative;
+    transition: border-color 0.3s;
+  }
+  .review-card:hover { border-color: rgba(196,154,48,0.4); }
+  .review-stars {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+  }
+  .star {
+    width: 14px; height: 14px;
+    fill: var(--hazel-light);
+    color: var(--hazel-light);
+  }
+  .review-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--blush);
+    margin-bottom: 28px;
+  }
+  .review-author {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.45);
+  }
+  .review-author strong {
+    color: rgba(245,240,232,0.8);
+    display: block;
+    margin-bottom: 2px;
+    letter-spacing: 0.08em;
+  }
+
+  /* VISIT */
+  .visit {
+    padding: 120px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    background: var(--cream);
+  }
+  .visit-info .about-tag { color: var(--hazel); }
+  .visit-info .about-tag::before { background: var(--hazel); }
+  .visit-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 3.5vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--bark);
+    margin-bottom: 40px;
+  }
+  .visit-title em { font-style: italic; color: var(--hazel); }
+  .visit-details {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+  .visit-detail {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  .visit-icon {
+    width: 40px; height: 40px;
+    border: 1px solid rgba(139,105,20,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--hazel);
+    font-size: 1rem;
+  }
+  .visit-detail-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 4px;
+  }
+  .visit-detail-val {
+    font-size: 0.95rem;
+    color: var(--bark);
+    font-weight: 400;
+    line-height: 1.6;
+  }
+  .visit-map {
+    height: 520px;
+    background: var(--sage-light);
+    position: relative;
+    overflow: hidden;
+  }
+  .visit-map iframe {
+    width: 100%; height: 100%;
+    border: none;
+    filter: sepia(20%) saturate(80%);
+  }
+  .map-pin {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--hazel);
+    color: var(--cream);
+    padding: 10px 18px;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    box-shadow: 0 8px 32px rgba(61,43,31,0.3);
+  }
+  .map-pin::after {
+    content: '';
+    position: absolute;
+    bottom: -8px; left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-top-color: var(--hazel);
+    border-bottom: none;
+  }
+
+  /* CTA BANNER */
+  .cta-banner {
+    background: var(--hazel);
+    padding: 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.08) 0%, transparent 60%),
+                radial-gradient(circle at 70% 50%, rgba(61,43,31,0.2) 0%, transparent 60%);
+  }
+  .cta-banner-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 4vw, 3.5rem);
+    font-weight: 300;
+    color: var(--cream);
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .cta-banner-title em { font-style: italic; }
+  .cta-banner-sub {
+    font-size: 0.95rem;
+    color: rgba(245,240,232,0.75);
+    margin-bottom: 40px;
+    font-weight: 300;
+    position: relative;
+  }
+  .btn-light {
+    background: var(--cream);
+    color: var(--bark);
+    padding: 16px 40px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-light:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(61,43,31,0.25);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--bark);
+    padding: 64px 80px 40px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 56px;
+  }
+  .footer-brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--cream);
+    margin-bottom: 16px;
+  }
+  .footer-brand-name span { font-style: italic; color: var(--hazel-light); }
+  .footer-brand-desc {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: rgba(245,240,232,0.5);
+    font-weight: 300;
+    margin-bottom: 28px;
+  }
+  .footer-social { display: flex; gap: 12px; }
+  .footer-social a {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(245,240,232,0.2);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(245,240,232,0.5);
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .footer-social a:hover { border-color: var(--hazel-light); color: var(--hazel-light); }
+  .footer-col-title {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.4);
+    margin-bottom: 20px;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .footer-links a {
+    font-size: 0.88rem;
+    color: rgba(245,240,232,0.6);
+    text-decoration: none;
+    transition: color 0.2s;
+    font-weight: 300;
+  }
+  .footer-links a:hover { color: var(--hazel-light); }
+  .footer-bottom {
+    border-top: 1px solid rgba(245,240,232,0.1);
+    padding-top: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-copy {
+    font-size: 0.78rem;
+    color: rgba(245,240,232,0.3);
+    letter-spacing: 0.05em;
+  }
+  .footer-copy a { color: rgba(245,240,232,0.5); text-decoration: none; }
+  .footer-copy a:hover { color: var(--hazel-light); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    nav.scrolled { padding: 14px 24px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-left { padding: 100px 32px 64px; }
+    .hero-right { height: 50vw; }
+    .hero-badge { left: auto; right: 24px; bottom: 24px; }
+    .about, .visit { grid-template-columns: 1fr; padding: 80px 32px; }
+    .about-imgs { height: 360px; }
+    .menu-section, .gallery, .testimonials, .cta-banner, footer { padding: 80px 32px; }
+    .menu-grid, .reviews-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 200px 200px 200px; }
+    .gallery-item:first-child { grid-row: 1 / 2; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .divider-strip { padding: 16px 32px; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Hazel <span>& Co.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">Our Story</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#visit">Visit</a></li>
+    <li><a href="#reserve" class="nav-reserve">Reserve</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Brunch Café · Tauranga</div>
+    <h1 class="hero-title">
+      Where mornings<br>
+      taste like <em>something</em><br>
+      beautiful.
+    </h1>
+    <p class="hero-sub">
+      Seasonal brunch, specialty coffee, and a warm space to slow down — right in the heart of Tauranga's waterfront.
+    </p>
+    <div class="hero-ctas">
+      <a href="#menu" class="btn-primary">View Menu</a>
+      <a href="#reserve" class="btn-ghost">Reserve a table</a>
+    </div>
+    <div class="hero-hours">
+      <span>Open daily</span> 7:00 am — 3:00 pm
+    </div>
+  </div>
+  <div class="hero-right">
+    <img class="hero-img"
+      src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=900&q=80"
+      alt="Hazel & Co. café interior" />
+    <div class="hero-img-overlay"></div>
+    <div class="hero-badge">
+      <span class="hero-badge-num">7+</span>
+      <span class="hero-badge-text">Years in Tauranga</span>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER STRIP -->
+<div class="divider-strip">
+  <div class="divider-items">
+    <div class="divider-item"><span class="divider-dot"></span>Specialty Coffee</div>
+    <div class="divider-item"><span class="divider-dot"></span>Seasonal Brunch</div>
+    <div class="divider-item"><span class="divider-dot"></span>Locally Sourced</div>
+    <div class="divider-item"><span class="divider-dot"></span>Open Daily 7am–3pm</div>
+    <div class="divider-item"><span class="divider-dot"></span>Waterfront Tauranga</div>
+    <div class="divider-item"><span class="divider-dot"></span>Dog Friendly</div>
+    <div class="divider-item"><span class="divider-dot"></span>Specialty Coffee</div>
+    <div class="divider-item"><span class="divider-dot"></span>Seasonal Brunch</div>
+    <div class="divider-item"><span class="divider-dot"></span>Locally Sourced</div>
+    <div class="divider-item"><span class="divider-dot"></span>Open Daily 7am–3pm</div>
+    <div class="divider-item"><span class="divider-dot"></span>Waterfront Tauranga</div>
+    <div class="divider-item"><span class="divider-dot"></span>Dog Friendly</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-imgs reveal">
+    <img class="about-img-main"
+      src="https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?w=700&q=80"
+      alt="Café food" />
+    <img class="about-img-accent"
+      src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=500&q=80"
+      alt="Coffee close up" />
+  </div>
+  <div class="about-content reveal">
+    <div class="about-tag">Our Story</div>
+    <h2 class="about-title">A little corner of <em>slow</em> in a busy world.</h2>
+    <p class="about-text">
+      Hazel & Co. started in 2018 with a simple idea: that breakfast should be an experience, not a rush. We partnered with local Bay of Plenty farmers, built our own spice blends, and found coffee roasters who care as much as we do.
+    </p>
+    <p class="about-text">
+      Every dish on our menu tells a story — from the free-range eggs sourced 12km away to the house-baked sourdough that's been our signature since day one.
+    </p>
+    <div class="about-values">
+      <div class="about-value-item">
+        <span class="about-value-num">12+</span>
+        <span class="about-value-label">Local suppliers</span>
+      </div>
+      <div class="about-value-item">
+        <span class="about-value-num">100%</span>
+        <span class="about-value-label">Free-range eggs</span>
+      </div>
+      <div class="about-value-item">
+        <span class="about-value-num">4.9★</span>
+        <span class="about-value-label">Google rating</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+  <div class="section-header reveal">
+    <span class="section-tag">What we serve</span>
+    <h2 class="section-title">The <em>Menu</em></h2>
+  </div>
+  <div class="menu-tabs reveal">
+    <button class="menu-tab active" onclick="switchTab(this)">Brunch</button>
+    <button class="menu-tab" onclick="switchTab(this)">Coffee</button>
+    <button class="menu-tab" onclick="switchTab(this)">Extras</button>
+  </div>
+  <div class="menu-grid reveal">
+    <div class="menu-item">
+      <div class="menu-item-badge">Fan Favourite</div>
+      <div class="menu-item-tag">Breakfast</div>
+      <div class="menu-item-name">The Hazel Stack</div>
+      <div class="menu-item-desc">House ricotta hotcakes, poached rhubarb, vanilla mascarpone, toasted hazelnuts, honey drizzle.</div>
+      <div class="menu-item-price">$22</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-tag">Savoury</div>
+      <div class="menu-item-name">Green Smash</div>
+      <div class="menu-item-desc">Smashed avo, house-pickled cucumber, dukkah, poached eggs, sourdough. Add halloumi $4.</div>
+      <div class="menu-item-price">$21</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-tag">Savoury</div>
+      <div class="menu-item-name">Eggs Benny</div>
+      <div class="menu-item-desc">Poached free-range eggs, house-cured salmon, sorrel hollandaise, toasted English muffin.</div>
+      <div class="menu-item-price">$24</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-badge">Seasonal</div>
+      <div class="menu-item-tag">Breakfast</div>
+      <div class="menu-item-name">Autumn Bowl</div>
+      <div class="menu-item-desc">Roasted pumpkin, soft-boiled egg, crispy chickpeas, tahini, pomegranate, toasted seeds.</div>
+      <div class="menu-item-price">$23</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-tag">Lunch</div>
+      <div class="menu-item-name">Sourdough BLT</div>
+      <div class="menu-item-desc">House-baked sourdough, streaky bacon, heirloom tomatoes, butter lettuce, lemon aioli.</div>
+      <div class="menu-item-price">$20</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-tag">Sweet</div>
+      <div class="menu-item-name">Banana Bread</div>
+      <div class="menu-item-desc">Warm slice of house-baked banana bread, whipped brown butter, sea salt flakes.</div>
+      <div class="menu-item-price">$9</div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="section-header reveal">
+    <span class="section-tag">Inside Hazel & Co.</span>
+    <h2 class="section-title">A space to <em>linger</em></h2>
+  </div>
+  <div class="gallery-grid reveal">
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=800&q=80" alt="Café interior" />
+      <div class="gallery-caption">Our dining room</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&q=80" alt="Coffee" />
+      <div class="gallery-caption">Single origin espresso</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&q=80" alt="Pancakes" />
+      <div class="gallery-caption">The Hazel Stack</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1559305616-3f99cd43e353?w=600&q=80" alt="Outdoor seating" />
+      <div class="gallery-caption">Courtyard seating</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=600&q=80" alt="Brunch spread" />
+      <div class="gallery-caption">Weekend brunch</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="reviews">
+  <div class="section-header reveal">
+    <span class="section-tag">What people say</span>
+    <h2 class="section-title">Loved by <em>Tauranga</em></h2>
+  </div>
+  <div class="reviews-grid reveal">
+    <div class="review-card">
+      <div class="review-stars">
+        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.4 7.4H20l-6.2 4.5 2.4 7.4L10 16l-6.2 4.3 2.4-7.4L0 8.4h7.6z"/></svg>
+        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.4 7.4H20l-6.2 4.5 2.4 7.4L10 16l-6.2 4.3 2.4-7.4L0 8.4h7.6z"/></svg>
+        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.4 7.4H20l-6.2 4.5 2.4 7.4L10 16l-6.2 4.3 2.4-7.4L0 8.4h7.6z"/></svg>
+        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.4 7.4H20l-6.2 4.5 2.4 7.4L10 16l-6.2 4.3 2.4-7.4L0 8.4h7.6z"/></svg>
+        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.4 7.4H20l-6.2 4.5 2.4 7.4L10 16l-6.2 4.3 2.4-7.4L0 8.4h7.6z"/></svg>
+      </div>
+      <p class="review-text">"The Hazel Stack completely changed how I think about weekend breakfast. The atmosphere is just perfect — warm, unhurried, genuinely beautiful."</p>
+      <div class="review-author"><strong>Sarah M.</strong>Tauranga local · Google Review</div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">
+        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.4 7.4H20l-6.2 4.5 2.4 7.4L10 16l-6.2 4.3 2.4-7.4L0 8.4h7.6z"/></svg>
+        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.4 7.4H20l-6.2 4.5 2.4 7.4L10 16l-6.2 4.3 2.4-7.4L0 8.4h7.6z"/></svg>
+        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.4 7.4H20l-6.2 4.5 2.4 7.4L10 16l-6.2 4.3 2.4-7.4L0 8.4h7.6z"/></svg>
+        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.4 7.4H20l-6.2 4.5 2.4 7.4L10 16l-6.2 4.3 2.4-7.4L0 8.4h7.6z"/></svg>
+        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.4 7.4H20l-6.2 4.5 2.4 7.4L10 16l-6.2 4.3 2.4-7.4L0 8.4h7.6z"/></svg>
+      </div>
+      <p class="review-text">"Best flat white in the Bay. The team actually care about what they're making — you can taste it. And the sourdough BLT is something else."</p>
+      <div class="review-author"><strong>Jake R.</strong>Mount Maunganui · Google Review</div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">
+        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.4 7.4H20l-6.2 4.5 2.4 7.4L10 16l-6.2 4.3 2.4-7.4L0 8.4h7.6z"/></svg>
+        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.4 7.4H20l-6.2 4.5 2.4 7.4L10 16l-6.2 4.3 2.4-7.4L0 8.4h7.6z"/></svg>
+        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.4 7.4H20l-6.2 4.5 2.4 7.4L10 16l-6.2 4.3 2.4-7.4L0 8.4h7.6z"/></svg>
+        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.4 7.4H20l-6.2 4.5 2.4 7.4L10 16l-6.2 4.3 2.4-7.4L0 8.4h7.6z"/></svg>
+        <svg class="star" viewBox="0 0 20 20"><path d="M10 1l2.4 7.4H20l-6.2 4.5 2.4 7.4L10 16l-6.2 4.3 2.4-7.4L0 8.4h7.6z"/></svg>
+      </div>
+      <p class="review-text">"We visit every Saturday when we're in Tauranga. The seasonal menu keeps it fresh and the service is always warm without being over the top."</p>
+      <div class="review-author"><strong>Emma & Tom H.</strong>Auckland visitors · Google Review</div>
+    </div>
+  </div>
+</section>
+
+<!-- VISIT -->
+<section class="visit" id="visit">
+  <div class="visit-info reveal">
+    <div class="about-tag">Find us</div>
+    <h2 class="visit-title">Come visit us in <em>Tauranga</em></h2>
+    <div class="visit-details">
+      <div class="visit-detail">
+        <div class="visit-icon">📍</div>
+        <div>
+          <div class="visit-detail-label">Address</div>
+          <div class="visit-detail-val">12 The Strand, Tauranga CBD<br>Bay of Plenty 3110, New Zealand</div>
+        </div>
+      </div>
+      <div class="visit-detail">
+        <div class="visit-icon">🕐</div>
+        <div>
+          <div class="visit-detail-label">Hours</div>
+          <div class="visit-detail-val">Monday – Friday: 7:00am – 3:00pm<br>Saturday – Sunday: 7:30am – 3:30pm</div>
+        </div>
+      </div>
+      <div class="visit-detail">
+        <div class="visit-icon">📞</div>
+        <div>
+          <div class="visit-detail-label">Phone & Email</div>
+          <div class="visit-detail-val">+64 7 123 4567<br>hello@hazelandco.nz</div>
+        </div>
+      </div>
+    </div>
+    <a href="#reserve" class="btn-primary">Reserve a Table</a>
+  </div>
+  <div class="visit-map reveal">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3145.8!2d176.1654!3d-37.6878!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDQxJzE2LjEiUyAxNzfCsDA5JzU1LjQiRQ!5e0!3m2!1sen!2snz!4v1234567890"
+      allowfullscreen="" loading="lazy">
+    </iframe>
+    <div class="map-pin">Hazel & Co. Tauranga</div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner" id="reserve">
+  <h2 class="cta-banner-title">Join us for <em>brunch</em> this weekend.</h2>
+  <p class="cta-banner-sub">Walk-ins welcome. Reservations recommended on weekends.</p>
+  <a href="tel:+6471234567" class="btn-light">Call to Reserve</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-name">Hazel <span>& Co.</span></div>
+      <p class="footer-brand-desc">Seasonal brunch and specialty coffee in the heart of Tauranga. Open daily, 7am to 3pm.</p>
+      <div class="footer-social">
+        <a href="#">ig</a>
+        <a href="#">fb</a>
+        <a href="#">gm</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Menu</div>
+      <ul class="footer-links">
+        <li><a href="#">Brunch</a></li>
+        <li><a href="#">Coffee</a></li>
+        <li><a href="#">Extras</a></li>
+        <li><a href="#">Specials</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Visit</div>
+      <ul class="footer-links">
+        <li><a href="#">12 The Strand</a></li>
+        <li><a href="#">Tauranga CBD</a></li>
+        <li><a href="#">Mon–Fri 7am–3pm</a></li>
+        <li><a href="#">Sat–Sun 7:30am–3:30pm</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Info</div>
+      <ul class="footer-links">
+        <li><a href="#">Our Story</a></li>
+        <li><a href="#">Reservations</a></li>
+        <li><a href="#">Private Events</a></li>
+        <li><a href="#">Gift Vouchers</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 Hazel & Co. · Tauranga, New Zealand</div>
+    <div class="footer-copy">Website by <a href="https://novowebpages.com">Novo</a></div>
+  </div>
+</footer>
+
+<script>
+  // Navbar scroll
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Menu tabs
+  function switchTab(btn) {
+    document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
