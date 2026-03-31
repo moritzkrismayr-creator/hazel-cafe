@@ -923,11 +923,13 @@
     <h2 class="section-title">The <em>Menu</em></h2>
   </div>
   <div class="menu-tabs reveal">
-    <button class="menu-tab active" onclick="switchTab(this)">Brunch</button>
-    <button class="menu-tab" onclick="switchTab(this)">Coffee</button>
-    <button class="menu-tab" onclick="switchTab(this)">Extras</button>
+    <button class="menu-tab active" data-tab="brunch" onclick="switchTab(this)">Brunch</button>
+    <button class="menu-tab" data-tab="coffee" onclick="switchTab(this)">Coffee</button>
+    <button class="menu-tab" data-tab="extras" onclick="switchTab(this)">Extras</button>
   </div>
-  <div class="menu-grid reveal">
+
+  <!-- BRUNCH -->
+  <div class="menu-grid reveal" data-menu="brunch">
     <div class="menu-item">
       <div class="menu-item-badge">Fan Favourite</div>
       <div class="menu-item-tag">Breakfast</div>
@@ -965,6 +967,89 @@
       <div class="menu-item-name">Banana Bread</div>
       <div class="menu-item-desc">Warm slice of house-baked banana bread, whipped brown butter, sea salt flakes.</div>
       <div class="menu-item-price">$9</div>
+    </div>
+  </div>
+
+  <!-- COFFEE -->
+  <div class="menu-grid" data-menu="coffee" style="display:none;">
+    <div class="menu-item">
+      <div class="menu-item-badge">House Favourite</div>
+      <div class="menu-item-tag">Filter</div>
+      <div class="menu-item-name">Batch Brew</div>
+      <div class="menu-item-desc">Daily rotating single-origin filter. Ask your server what's on today.</div>
+      <div class="menu-item-price">$5</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-tag">Espresso</div>
+      <div class="menu-item-name">Flat White</div>
+      <div class="menu-item-desc">Double shot, silky microfoam. Our house blend — nutty, chocolate, bright finish.</div>
+      <div class="menu-item-price">$6</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-tag">Espresso</div>
+      <div class="menu-item-name">Long Black</div>
+      <div class="menu-item-desc">Hot water over a double ristretto. Clean, intense, no milk.</div>
+      <div class="menu-item-price">$5.50</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-badge">Seasonal</div>
+      <div class="menu-item-tag">Signature</div>
+      <div class="menu-item-name">Hazel Latte</div>
+      <div class="menu-item-desc">House hazelnut syrup, oat milk, double shot, dusted with cacao.</div>
+      <div class="menu-item-price">$7.50</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-tag">Cold</div>
+      <div class="menu-item-name">Cold Brew</div>
+      <div class="menu-item-desc">18-hour cold steep, served over ice. Smooth, low-acid, naturally sweet.</div>
+      <div class="menu-item-price">$7</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-tag">Non-Coffee</div>
+      <div class="menu-item-name">Matcha Latte</div>
+      <div class="menu-item-desc">Ceremonial grade matcha, steamed oat milk, light honey. Hot or iced.</div>
+      <div class="menu-item-price">$7</div>
+    </div>
+  </div>
+
+  <!-- EXTRAS -->
+  <div class="menu-grid" data-menu="extras" style="display:none;">
+    <div class="menu-item">
+      <div class="menu-item-tag">Side</div>
+      <div class="menu-item-name">Sourdough Toast</div>
+      <div class="menu-item-desc">Two slices of house-baked sourdough, cultured butter, house-made jam.</div>
+      <div class="menu-item-price">$7</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-tag">Side</div>
+      <div class="menu-item-name">Halloumi</div>
+      <div class="menu-item-desc">Pan-fried halloumi, lemon, chilli flakes.</div>
+      <div class="menu-item-price">$6</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-badge">Popular</div>
+      <div class="menu-item-tag">Side</div>
+      <div class="menu-item-name">Smashed Avo</div>
+      <div class="menu-item-desc">House-smashed avo, dukkah, lemon, chilli oil. On sourdough.</div>
+      <div class="menu-item-price">$8</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-tag">Side</div>
+      <div class="menu-item-name">Poached Eggs (2)</div>
+      <div class="menu-item-desc">Two free-range poached eggs, served on their own or add to any dish.</div>
+      <div class="menu-item-price">$5</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-tag">Sweet</div>
+      <div class="menu-item-name">Granola Pot</div>
+      <div class="menu-item-desc">House-toasted granola, coconut yoghurt, seasonal fruit, honey.</div>
+      <div class="menu-item-price">$10</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-tag">Sweet</div>
+      <div class="menu-item-name">Pastry of the Day</div>
+      <div class="menu-item-desc">Ask your server — baked fresh each morning in-house.</div>
+      <div class="menu-item-price">$6</div>
     </div>
   </div>
 </section>
@@ -1066,7 +1151,7 @@
         <div class="visit-icon">📞</div>
         <div>
           <div class="visit-detail-label">Phone & Email</div>
-          <div class="visit-detail-val">+64 7 123 4567<br>hello@hazelandco.nz</div>
+          <div class="visit-detail-val">+64 7 123 4567<br><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="157d7079797a557d746f7079747b71767a3b7b6f">[email&#160;protected]</a></div>
         </div>
       </div>
     </div>
@@ -1134,7 +1219,20 @@
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+
+  function switchTab(btn) {
+    // Update active tab button
+    document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    // Show correct menu grid
+    var tab = btn.getAttribute('data-tab');
+    document.querySelectorAll('.menu-grid').forEach(function(grid) {
+      grid.style.display = grid.getAttribute('data-menu') === tab ? 'grid' : 'none';
+      if (grid.getAttribute('data-menu') === tab) { grid.classList.add('on'); }
+    });
+  }
+
   // Navbar scroll
   const nav = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
@@ -1153,11 +1251,6 @@
   }, { threshold: 0.1 });
   reveals.forEach(el => observer.observe(el));
 
-  // Menu tabs
-  function switchTab(btn) {
-    document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
-    btn.classList.add('active');
-  }
 </script>
 </body>
 </html>
